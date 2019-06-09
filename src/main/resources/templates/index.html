@@ -7,7 +7,9 @@
  <body>
   <h1>Rankings</h1>
   <ul>
-   <li th:each="ranking: ${rankings}" th:text="${ranking}">Ranking</li>
+   <li th:each="ranking: ${rankings}">
+    <a href="ranking.html" th:href="@{/ranking/{ranking}(ranking=${ranking})}" th:text="${ranking}">Ranking</a>
+   </li>
   </ul>
   <form method="POST" action="addRanking">
    <label>New ranking <input name="newRanking"/></label>

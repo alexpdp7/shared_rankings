@@ -6,4 +6,6 @@ public interface RankingService {
 	public Collection<String> getRankings();
 
 	public void addRanking(String newRanking);
+
+	public Ranking getRanking(String ranking);
 }
