@@ -6,5 +6,14 @@
  </head>
  <body>
   <h1 th:text="${ranking.name}">Ranking Foo</h1>
+  <h2>Participants</h2>
+  <ul>
+   <li th:each="participant: ${ranking.participants}" th:text="${participant}">Participant</li>
+  </ul>
+  <form method="POST" th:action="@{/addParticipant}">
+   <label>New participant <input name="newParticipant"/></label>
+   <input type="hidden" name="ranking" th:value="${ranking.name}"/>
+   <input type="submit"/>
+  </form>
  </body>
 </html>

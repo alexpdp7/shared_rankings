@@ -13,7 +13,11 @@ public class SimpleRankingServiceImpl implements RankingService {
 
 	public SimpleRankingServiceImpl(boolean testData) {
 		if (testData) {
-			rankings.add(new SimpleRankingImpl("test"));
+			SimpleRankingImpl ranking = new SimpleRankingImpl("test");
+			ranking.participants.add("Alice");
+			ranking.participants.add("Bob");
+			ranking.participants.add("Carol");
+			rankings.add(ranking);
 		}
 	}
 

@@ -1,6 +1,9 @@
 package net.pdp7.shared_rankings.service;
 
-public interface Ranking {
+import java.util.Collection;
 
+public interface Ranking {
 	public String getName();
+	public Collection<String> getParticipants();
+	public void addParticipant(String newParticipant);
 }

@@ -33,6 +33,13 @@ public class MainController {
 		return "redirect:/";
 	}
 
+	@PostMapping("/addParticipant")
+	public String addParticipant(@RequestParam String ranking, @RequestParam String newParticipant) {
+		rankingService.getRanking(ranking).addParticipant(newParticipant);
+		return "redirect:/ranking/" + ranking;
+	}
+
+	
 	@GetMapping("/ranking/{ranking}")
 	public ModelAndView ranking(@PathVariable String ranking) {
 		return new ModelAndView("ranking", Map.of("ranking", rankingService.getRanking(ranking)));
