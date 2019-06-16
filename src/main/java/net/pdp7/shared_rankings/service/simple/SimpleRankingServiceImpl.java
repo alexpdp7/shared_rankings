@@ -18,18 +18,18 @@ public class SimpleRankingServiceImpl implements RankingService {
 		if (testData) {
 			SimpleRankingImpl ranking = new SimpleRankingImpl("test");
 
-			ParticipantRanking aliceRanking = new SimpleParticipantRankingImpl();
+			ParticipantRanking aliceRanking = new SimpleParticipantRankingImpl(ranking);
 			try {
 				aliceRanking.setElements(
 						List.of(List.of("Blade Runner", "The Princess Bride"), List.of("Manos the Hands of Fate")));
 				ranking.addParticipant("Alice", aliceRanking);
 
-				ParticipantRanking bobRanking = new SimpleParticipantRankingImpl();
+				ParticipantRanking bobRanking = new SimpleParticipantRankingImpl(ranking);
 				bobRanking.setElements(
 						List.of(List.of("Blade Runner", "The Princess Bride"), List.of("Manos the Hands of Fate")));
 				ranking.addParticipant("Bob", bobRanking);
 
-				ParticipantRanking carolRanking = new SimpleParticipantRankingImpl();
+				ParticipantRanking carolRanking = new SimpleParticipantRankingImpl(ranking);
 				carolRanking.setElements(
 						List.of(List.of("Blade Runner", "The Princess Bride"), List.of("Manos the Hands of Fate")));
 				ranking.addParticipant("Carol", carolRanking);

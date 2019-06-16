@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import net.pdp7.shared_rankings.service.ParticipantRanking;
+import net.pdp7.shared_rankings.service.Ranking;
 import net.pdp7.shared_rankings.service.RankingService;
 import net.pdp7.shared_rankings.service.simple.SimpleParticipantRankingImpl;
 
@@ -42,13 +43,22 @@ public class MainController {
 
 	@PostMapping("/addParticipant")
 	public String addParticipant(@RequestParam String ranking, @RequestParam String newParticipant) {
-		rankingService.getRanking(ranking).addParticipant(newParticipant, new SimpleParticipantRankingImpl());
+		Ranking ranking_ = rankingService.getRanking(ranking);
+		ranking_.addParticipant(newParticipant, new SimpleParticipantRankingImpl(ranking_));
 		return "redirect:/ranking/" + ranking;
 	}
 
 	@GetMapping("/ranking/{ranking}")
 	public ModelAndView ranking(@PathVariable String ranking) {
 		return new ModelAndView("ranking", Map.of("ranking", rankingService.getRanking(ranking)));
+	}
+
+	@GetMapping("/ranking/{ranking}/stream")
+	public SseEmitter rankingStream(@PathVariable String ranking) throws IOException {
+		Ranking ranking_ = rankingService.getRanking(ranking);
+		SseEmitter emitter = new SseEmitter();
+		ranking_.addEmitter(emitter);
+		return emitter;
 	}
 
 	@GetMapping("/ranking/{ranking}/participant/{participant}")

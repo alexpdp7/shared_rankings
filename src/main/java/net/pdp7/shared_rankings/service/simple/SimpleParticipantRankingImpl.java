@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import net.pdp7.shared_rankings.service.ParticipantRanking;
+import net.pdp7.shared_rankings.service.Ranking;
 
 public class SimpleParticipantRankingImpl implements ParticipantRanking {
 
@@ -16,6 +17,11 @@ public class SimpleParticipantRankingImpl implements ParticipantRanking {
 	protected List<SseEmitter> emitters = new ArrayList<SseEmitter>();
 
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
+	protected final Ranking ranking;
+
+	public SimpleParticipantRankingImpl(Ranking ranking) {
+		this.ranking = ranking;
+	}
 
 	@Override
 	public List<List<String>> getElements() {
@@ -35,6 +41,7 @@ public class SimpleParticipantRankingImpl implements ParticipantRanking {
 			}
 		}
 		emittersToRemove.forEach(e -> emitters.remove(e));
+		ranking.updateRanked();
 	}
 
 	@Override
@@ -46,4 +53,5 @@ public class SimpleParticipantRankingImpl implements ParticipantRanking {
 			throw new RuntimeException(e);
 		}
 	}
+
 }

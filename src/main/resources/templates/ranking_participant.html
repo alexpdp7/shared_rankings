@@ -31,12 +31,28 @@
   </script>
   <script src="/js/ranking.js" type="module"></script>
   <h1 th:text="${ranking.name}">Ranking Foo</h1>
-  <ranking-root id="rankingRoot"/>
+  <ranking-root id="rankingRoot"></ranking-root>
+  <ol id="ranked">
+   <li>Loading</li>
+  </ol>
   <script>
    // <![CDATA[
    var evtSource = new EventSource(document.URL + "/stream");
     evtSource.onmessage = function(e) {
     document.getElementById("rankingRoot").load(JSON.parse(e.data));
+   };
+   var evtSourceRanked = new EventSource(document.URL.split("/").slice(0,-2).join("/") + "/stream");
+   evtSourceRanked.onmessage = function(e) {
+    var rankedDom = document.getElementById("ranked");
+    while (rankedDom.firstChild) {
+     rankedDom.removeChild(rankedDom.firstChild);
+    }
+    var ranked = JSON.parse(e.data);
+    for(rank of ranked) {
+     rankDom = document.createElement("li");
+     rankDom.innerText = rank;
+     rankedDom.appendChild(rankDom);
+    }
    };
    // ]]>
   </script>
