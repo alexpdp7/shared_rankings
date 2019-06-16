@@ -11,4 +11,5 @@ public interface ParticipantRanking {
 	public void setElements(List<List<String>> elements) throws IOException;
 
 	public void addEmitter(SseEmitter sseEmitter);
+
 }
