@@ -1,14 +1,16 @@
 package net.pdp7.shared_rankings.service.simple;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
+import net.pdp7.shared_rankings.service.ParticipantRanking;
 import net.pdp7.shared_rankings.service.Ranking;
 
 public class SimpleRankingImpl implements Ranking {
 
 	public final String name;
-	public final Collection<String> participants = new ArrayList<String>();
+	public final Map<String, ParticipantRanking> participantRankings = new HashMap<String, ParticipantRanking>();
 
 	public SimpleRankingImpl(String name) {
 		this.name = name;
@@ -21,12 +23,16 @@ public class SimpleRankingImpl implements Ranking {
 
 	@Override
 	public Collection<String> getParticipants() {
-		return participants;
+		return participantRankings.keySet();
 	}
 
 	@Override
-	public void addParticipant(String newParticipant) {
-		participants.add(newParticipant);
+	public void addParticipant(String newParticipant, ParticipantRanking participantRanking) {
+		participantRankings.put(newParticipant, participantRanking);
 	}
 
+	@Override
+	public ParticipantRanking getParticipantRanking(String participant) {
+		return participantRankings.get(participant);
+	}
 }
