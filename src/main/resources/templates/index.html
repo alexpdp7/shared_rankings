@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org">
- <head>
-  <title>Shared Rankings</title>
- </head>
- <body>
-  <h1>Rankings</h1>
-  <ul>
-   <li th:each="ranking: ${rankings}">
-    <a href="ranking.html" th:href="@{/ranking/{ranking}(ranking=${ranking})}" th:text="${ranking}">Ranking</a>
-   </li>
-  </ul>
-  <form method="POST" action="addRanking">
-   <label>New ranking <input name="newRanking"/></label>
-   <input type="submit"/>
-  </form>
- </body>
+	<head>
+		<title>Shared Rankings</title>
+	</head>
+	<body>
+		<h1>Rankings</h1>
+		<ul>
+			<li th:each="ranking: ${rankings}">
+				<a href="ranking.html" th:href="@{/ranking/{ranking}(ranking=${ranking})}" th:text="${ranking}">Ranking</a>
+			</li>
+		</ul>
+		<form method="POST" action="addRanking">
+			<label>New ranking <input name="newRanking"/></label>
+			<input type="submit"/>
+		</form>
+	</body>
 </html>

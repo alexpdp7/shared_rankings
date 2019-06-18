@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org">
- <head>
-  <title th:text="${ranking.name}">Ranking</title>
- </head>
- <body>
-  <h1 th:text="${ranking.name}">Ranking Foo</h1>
-  <h2>Participants</h2>
-  <ul>
-   <li th:each="participant: ${ranking.participants}">
-    <a href="ranking_participant.html" th:text="${participant}" th:href="@{/ranking/{ranking}/participant/{participant}(ranking=${ranking.name},participant=${participant})}">Participant</a>
-   </li>
-  </ul>
-  <form method="POST" th:action="@{/addParticipant}">
-   <label>New participant <input name="newParticipant"/></label>
-   <input type="hidden" name="ranking" th:value="${ranking.name}"/>
-   <input type="submit"/>
-  </form>
- </body>
+	<head>
+		<title th:text="${ranking.name}">Ranking</title>
+	</head>
+	<body>
+		<h1 th:text="${ranking.name}">Ranking Foo</h1>
+		<h2>Participants</h2>
+		<ul>
+			<li th:each="participant: ${ranking.participants}">
+				<a href="ranking_participant.html"
+				   th:href="@{/ranking/{ranking}/participant/{participant}(ranking=${ranking.name},participant=${participant})}"
+				   th:text="${participant}"
+				   >Participant</a>
+			</li>
+		</ul>
+		<form method="POST" th:action="@{/addParticipant}">
+			<label>New participant <input name="newParticipant"/></label>
+			<input type="hidden" name="ranking" th:value="${ranking.name}"/>
+			<input type="submit"/>
+		</form>
+	</body>
 </html>

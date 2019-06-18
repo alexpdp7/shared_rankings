@@ -1,60 +1,60 @@
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org">
- <head>
-  <title th:text="${ranking.name}">Ranking</title>
-  <link rel="stylesheet" href="/webjars/mobile-drag-drop/2.3.0-rc.1/default.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style type="text/css">
-   ranking-element {
-    background-color: lightcoral;
-    display: block;
-    border: 1px solid black;
-    margin-bottom: 0.4em;
-    padding: 0.4em;
-   }
-   ranking-drop {
-    border: 1px dashed blue;
-    display: block;
-    padding: 0.5em;
-   }
-  </style>
- </head>
- <body>
-  <script src="/webjars/webcomponents__webcomponentsjs/2.2.10/webcomponents-loader.js"></script>
-  <script src="/webjars/mobile-drag-drop/2.3.0-rc.1/index.min.js"></script>
-  <script src="/webjars/mobile-drag-drop/2.3.0-rc.1/scroll-behaviour.min.js"></script>
-  <script>
-   MobileDragDrop.polyfill({
-    dragImageTranslateOverride: MobileDragDrop.scrollBehaviourDragImageTranslateOverride
-   });
-  </script>
-  <script src="/js/ranking.js" type="module"></script>
-  <h1 th:text="${ranking.name}">Ranking Foo</h1>
-  <ranking-root id="rankingRoot"></ranking-root>
-  <ol id="ranked">
-   <li>Loading</li>
-  </ol>
-  <script>
-   // <![CDATA[
-   var evtSource = new EventSource(document.URL + "/stream");
-    evtSource.onmessage = function(e) {
-    document.getElementById("rankingRoot").load(JSON.parse(e.data));
-   };
-   var evtSourceRanked = new EventSource(document.URL.split("/").slice(0,-2).join("/") + "/stream");
-   evtSourceRanked.onmessage = function(e) {
-    var rankedDom = document.getElementById("ranked");
-    while (rankedDom.firstChild) {
-     rankedDom.removeChild(rankedDom.firstChild);
-    }
-    var ranked = JSON.parse(e.data);
-    for(rank of ranked) {
-     rankDom = document.createElement("li");
-     rankDom.innerText = rank;
-     rankedDom.appendChild(rankDom);
-    }
-   };
-   // ]]>
-  </script>
- </body>
+	<head>
+		<title th:text="${ranking.name}">Ranking</title>
+		<link rel="stylesheet" href="/webjars/mobile-drag-drop/2.3.0-rc.1/default.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style type="text/css">
+			ranking-element {
+				background-color: lightcoral;
+				display: block;
+				border: 1px solid black;
+				margin-bottom: 0.4em;
+				padding: 0.4em;
+			}
+			ranking-drop {
+				border: 1px dashed blue;
+				display: block;
+				padding: 0.5em;
+			}
+		</style>
+	</head>
+	<body>
+		<script src="/webjars/webcomponents__webcomponentsjs/2.2.10/webcomponents-loader.js"></script>
+		<script src="/webjars/mobile-drag-drop/2.3.0-rc.1/index.min.js"></script>
+		<script src="/webjars/mobile-drag-drop/2.3.0-rc.1/scroll-behaviour.min.js"></script>
+		<script>
+			MobileDragDrop.polyfill({
+				dragImageTranslateOverride: MobileDragDrop.scrollBehaviourDragImageTranslateOverride
+			});
+		</script>
+		<script src="/js/ranking.js" type="module"></script>
+		<h1 th:text="${ranking.name}">Ranking Foo</h1>
+		<ranking-root id="rankingRoot"></ranking-root>
+		<ol id="ranked">
+			<li>Loading</li>
+		</ol>
+		<script>
+			// <![CDATA[
+			var evtSource = new EventSource(document.URL + "/stream");
+			evtSource.onmessage = function(e) {
+				document.getElementById("rankingRoot").load(JSON.parse(e.data));
+			};
+			var evtSourceRanked = new EventSource(document.URL.split("/").slice(0,-2).join("/") + "/stream");
+			evtSourceRanked.onmessage = function(e) {
+				var rankedDom = document.getElementById("ranked");
+				while (rankedDom.firstChild) {
+					rankedDom.removeChild(rankedDom.firstChild);
+				}
+				var ranked = JSON.parse(e.data);
+				for(rank of ranked) {
+					rankDom = document.createElement("li");
+					rankDom.innerText = rank;
+					rankedDom.appendChild(rankDom);
+				}
+			};
+			// ]]>
+		</script>
+	</body>
 </html>
