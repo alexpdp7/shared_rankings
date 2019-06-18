@@ -44,6 +44,13 @@ class RankingDrop extends HTMLElement {
 			var data = event.dataTransfer.getData("text/plain");
 			rankingDrop.parentNode.dropped(this, data);
 		};
+		const adder = document.createElement("button");
+		adder.innerText = "+";
+		adder.onclick = function() {
+			const newElement = window.prompt();
+			rankingDrop.parentNode.dropped(rankingDrop, newElement);
+		};
+		this.appendChild(adder);
 	}
 
 	load(data, rankingRoot) {
@@ -67,12 +74,12 @@ class RankingRoot extends HTMLElement {
 			this.removeChild(this.firstChild);
 		}
 
-		this.appendChild(document.createElement("ranking-drop"));
+		this.appendChild(new RankingDrop());
 		for(const rank of data) {
-			const drop = document.createElement("ranking-drop")
+			const drop = new RankingDrop();
 			drop.load(rank);
 			this.appendChild(drop);
-			this.appendChild(document.createElement("ranking-drop"));
+			this.appendChild(new RankingDrop());
 		}
 	}
 
@@ -80,7 +87,7 @@ class RankingRoot extends HTMLElement {
 		var ranking = [];
 		for(const drop of this.children) {
 			var level = [];
-			for(const elem of drop.children) {
+			for(const elem of drop.querySelectorAll("ranking-element")) {
 				if(elem.id == what) {
 					continue;
 				}
@@ -93,6 +100,7 @@ class RankingRoot extends HTMLElement {
 				ranking.push(level);
 			}
 		}
+		console.log(ranking);
 		var xhr = new XMLHttpRequest();
 		xhr.open("POST", document.URL + "/update");
 		xhr.overrideMimeType("text/plain");
