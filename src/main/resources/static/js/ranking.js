@@ -21,10 +21,15 @@ customElements.define("ranking-element", RankingElement);
 function dragover(event) {
 	event.preventDefault();
 	event.dataTransfer.dropEffect = "move";
+	this.classList.add("dragHover");
 }
 
 function dragenter(event) {
 	event.preventDefault();
+}
+
+function dragleave(event) {
+	this.classList.remove("dragHover");
 }
 
 class RankingDrop extends HTMLElement {
@@ -32,6 +37,7 @@ class RankingDrop extends HTMLElement {
 		super();
 		this.ondragenter = dragenter;
 		this.ondragover = dragover;
+		this.ondragleave = dragleave;
 		var rankingDrop = this;
 		this.ondrop = function(event) {
 			event.preventDefault();
