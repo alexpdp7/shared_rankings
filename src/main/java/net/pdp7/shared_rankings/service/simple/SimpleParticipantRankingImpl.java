@@ -13,7 +13,7 @@ import net.pdp7.shared_rankings.service.Ranking;
 
 public class SimpleParticipantRankingImpl implements ParticipantRanking {
 
-	protected List<List<String>> elements;
+	protected List<List<String>> elements = new ArrayList<List<String>>();
 	protected List<SseEmitter> emitters = new ArrayList<SseEmitter>();
 
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
