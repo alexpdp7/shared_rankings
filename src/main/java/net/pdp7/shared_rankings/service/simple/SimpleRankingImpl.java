@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,7 +59,10 @@ public class SimpleRankingImpl implements Ranking {
 	}
 
 	@Override
-	public void updateRanked() {
+	public void update() {
+		for (ParticipantRanking participantRanking : participantRankings.values()) {
+			participantRanking.update();
+		}
 		List<SseEmitter> emittersToRemove = new ArrayList<SseEmitter>();
 		for (SseEmitter emitter : emitters) {
 			try {
@@ -68,6 +73,10 @@ public class SimpleRankingImpl implements Ranking {
 			}
 		}
 		emittersToRemove.forEach(e -> emitters.remove(e));
+	}
 
+	@Override
+	public Set<String> getAllVoted() {
+		return participantRankings.values().stream().flatMap(r -> r.getAllVoted().stream()).collect(Collectors.toSet());
 	}
 }

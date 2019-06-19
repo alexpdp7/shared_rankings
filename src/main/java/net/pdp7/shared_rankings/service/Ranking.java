@@ -2,6 +2,7 @@ package net.pdp7.shared_rankings.service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -25,5 +26,7 @@ public interface Ranking {
 
 	public void addEmitter(SseEmitter emitter);
 
-	public void updateRanked();
+	public void update();
+
+	public Set<String> getAllVoted();
 }

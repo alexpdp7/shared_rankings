@@ -3,6 +3,8 @@ package net.pdp7.shared_rankings.service.simple;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,30 +27,45 @@ public class SimpleParticipantRankingImpl implements ParticipantRanking {
 
 	@Override
 	public List<List<String>> getElements() {
-		return elements;
+		Set<String> allVoted = ranking.getAllVoted();
+		allVoted.removeAll(getAllVoted());
+		ArrayList<List<String>> elementsWithRest = new ArrayList<List<String>>(elements);
+		if (!allVoted.isEmpty()) {
+			elementsWithRest.add(new ArrayList<String>(allVoted));
+		}
+		return elementsWithRest;
+	}
+
+	@Override
+	public Set<String> getAllVoted() {
+		return elements.stream().flatMap(r -> r.stream()).collect(Collectors.toSet());
 	}
 
 	@Override
 	public void setElements(List<List<String>> elements) {
 		this.elements = elements;
+		ranking.update();
+	}
+
+	@Override
+	public void update() {
 		List<SseEmitter> emittersToRemove = new ArrayList<SseEmitter>();
 		for (SseEmitter emitter : emitters) {
 			try {
-				emitter.send(elements);
+				emitter.send(getElements());
 			} catch (Exception e) {
 				logger.error("Error emitting, removing emitter", e);
 				emittersToRemove.add(emitter);
 			}
 		}
 		emittersToRemove.forEach(e -> emitters.remove(e));
-		ranking.updateRanked();
 	}
 
 	@Override
 	public void addEmitter(SseEmitter sseEmitter) {
 		emitters.add(sseEmitter);
 		try {
-			sseEmitter.send(elements);
+			sseEmitter.send(getElements());
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
