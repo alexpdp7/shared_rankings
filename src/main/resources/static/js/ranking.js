@@ -48,7 +48,9 @@ class RankingDrop extends HTMLElement {
 		adder.innerText = "+";
 		adder.onclick = function() {
 			const newElement = window.prompt();
-			rankingDrop.parentNode.dropped(rankingDrop, newElement);
+			if(newElement) {
+				rankingDrop.parentNode.dropped(rankingDrop, newElement);
+			}
 		};
 		this.appendChild(adder);
 	}
