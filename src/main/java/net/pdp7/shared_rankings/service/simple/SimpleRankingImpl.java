@@ -87,4 +87,12 @@ public class SimpleRankingImpl implements Ranking {
 		}
 		update();
 	}
+
+	@Override
+	public void deleteElement(String element) {
+		for (ParticipantRanking participantRanking : participantRankings.values()) {
+			participantRanking.deleteElement(element);
+		}
+		update();
+	}
 }

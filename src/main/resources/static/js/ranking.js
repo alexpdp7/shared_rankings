@@ -13,6 +13,7 @@ class RankingElement extends HTMLElement {
 	load(data) {
 		const rankingElement = this;
 		this.innerText = data;
+
 		const editButton = document.createElement("button");
 		editButton.innerText = "edit";
 		editButton.onclick = function() {
@@ -24,6 +25,21 @@ class RankingElement extends HTMLElement {
 			xhr.send(newName);
 		};
 		this.appendChild(editButton);
+
+		const deleteButton = document.createElement("button");
+		deleteButton.innerText = "delete";
+		deleteButton.onclick = function() {
+			if(!window.confirm("Delete for all participants")) {
+				return;
+			}
+			var xhr = new XMLHttpRequest();
+			xhr.open("POST", document.URL.split("/").slice(0,-2).join("/") + "/delete/" + rankingElement.id);
+			xhr.overrideMimeType("text/plain");
+			xhr.setRequestHeader("Content-Type", "application/json");
+			xhr.send();
+		};
+		this.appendChild(deleteButton);
+
 		this.id = data;
 	}
 };

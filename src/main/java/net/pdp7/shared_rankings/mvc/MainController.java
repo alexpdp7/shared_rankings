@@ -69,6 +69,14 @@ public class MainController {
 		return new HttpHeaders();
 	}
 
+	@PostMapping("/ranking/{ranking}/delete/{element}")
+	public HttpHeaders deleteRankingElement(@PathVariable String ranking, @PathVariable String element)
+			throws IOException {
+		Ranking ranking_ = rankingService.getRanking(ranking);
+		ranking_.deleteElement(element);
+		return new HttpHeaders();
+	}
+
 	@GetMapping("/ranking/{ranking}/participant/{participant}")
 	public ModelAndView ranking(@PathVariable String ranking, @PathVariable String participant) {
 		return new ModelAndView("ranking_participant", Map.of("ranking", rankingService.getRanking(ranking)));

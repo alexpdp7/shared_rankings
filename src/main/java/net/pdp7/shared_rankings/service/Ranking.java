@@ -31,4 +31,6 @@ public interface Ranking {
 	public Set<String> getAllVoted();
 
 	public void renameElement(String element, String newName);
+
+	public void deleteElement(String element);
 }

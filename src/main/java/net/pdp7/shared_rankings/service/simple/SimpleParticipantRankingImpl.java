@@ -77,4 +77,10 @@ public class SimpleParticipantRankingImpl implements ParticipantRanking {
 				.map(r -> r.stream().map(e -> e.equals(element) ? newName : e).collect(Collectors.toList()))
 				.collect(Collectors.toList()));
 	}
+
+	@Override
+	public void deleteElement(String element) {
+		setElements(elements.stream().map(r -> r.stream().filter(e -> !e.equals(element)).collect(Collectors.toList()))
+				.filter(r -> !r.isEmpty()).collect(Collectors.toList()));
+	}
 }
