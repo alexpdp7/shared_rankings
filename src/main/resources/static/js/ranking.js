@@ -102,7 +102,6 @@ class RankingRoot extends HTMLElement {
 				ranking.push(level);
 			}
 		}
-		console.log(ranking);
 		var xhr = new XMLHttpRequest();
 		xhr.open("POST", document.URL + "/update");
 		xhr.overrideMimeType("text/plain");
