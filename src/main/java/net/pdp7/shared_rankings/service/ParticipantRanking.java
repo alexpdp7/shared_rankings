@@ -17,4 +17,6 @@ public interface ParticipantRanking {
 
 	public void update();
 
+	public void renameElement(String element, String newName);
+
 }

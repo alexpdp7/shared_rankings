@@ -61,6 +61,14 @@ public class MainController {
 		return emitter;
 	}
 
+	@PostMapping("/ranking/{ranking}/edit/{element}")
+	public HttpHeaders editRankingElement(@PathVariable String ranking, @PathVariable String element,
+			@RequestBody String newName) throws IOException {
+		Ranking ranking_ = rankingService.getRanking(ranking);
+		ranking_.renameElement(element, newName);
+		return new HttpHeaders();
+	}
+
 	@GetMapping("/ranking/{ranking}/participant/{participant}")
 	public ModelAndView ranking(@PathVariable String ranking, @PathVariable String participant) {
 		return new ModelAndView("ranking_participant", Map.of("ranking", rankingService.getRanking(ranking)));

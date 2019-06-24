@@ -71,4 +71,10 @@ public class SimpleParticipantRankingImpl implements ParticipantRanking {
 		}
 	}
 
+	@Override
+	public void renameElement(String element, String newName) {
+		setElements(elements.stream()
+				.map(r -> r.stream().map(e -> e.equals(element) ? newName : e).collect(Collectors.toList()))
+				.collect(Collectors.toList()));
+	}
 }

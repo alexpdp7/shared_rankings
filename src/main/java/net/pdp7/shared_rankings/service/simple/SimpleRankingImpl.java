@@ -79,4 +79,12 @@ public class SimpleRankingImpl implements Ranking {
 	public Set<String> getAllVoted() {
 		return participantRankings.values().stream().flatMap(r -> r.getAllVoted().stream()).collect(Collectors.toSet());
 	}
+
+	@Override
+	public void renameElement(String element, String newName) {
+		for (ParticipantRanking participantRanking : participantRankings.values()) {
+			participantRanking.renameElement(element, newName);
+		}
+		update();
+	}
 }
